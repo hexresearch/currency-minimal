@@ -8,6 +8,7 @@ import Data.Map (Map)
 import Data.Maybe (fromJust)
 import Data.Store
 import Data.String(IsString(..))
+import Data.Text.Conversions(ToText(..))
 import Data.Text (Text)
 import GHC.Generics
 import qualified Data.Map as Map
@@ -34,6 +35,9 @@ instance Store CurrencyCode
 
 instance Show CurrencyCode where
   show (CurrencyCode x) = show x
+
+instance ToText CurrencyCode where
+  toText (CurrencyCode t) = t
 
 instance IsString CurrencyCode where
   fromString s = CurrencyCode (Text.toUpper (Text.pack (take 3  s)))
