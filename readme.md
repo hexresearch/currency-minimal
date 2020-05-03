@@ -1,0 +1,6 @@
+# currency-minimal
+
+## WHY
+
+because
+
