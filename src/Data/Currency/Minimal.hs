@@ -1,10 +1,12 @@
 {-# LANGUAGE UndecidableInstances #-}
 module Data.Currency.Minimal where
 
+import Data.Aeson
 import Data.Data
 import Data.Fixed
 import Data.Map (Map)
 import Data.Maybe (fromJust)
+import Data.Store
 import Data.String(IsString(..))
 import Data.Text (Text)
 import GHC.Generics
@@ -26,6 +28,9 @@ convertJust e t v = fromJust $ convertMaybe e t v
 newtype CurrencyCode = CurrencyCode Text
                        deriving (Eq,Ord,Data,Generic)
 
+instance ToJSON CurrencyCode
+instance FromJSON CurrencyCode
+instance Store CurrencyCode
 
 instance Show CurrencyCode where
   show (CurrencyCode x) = show x
@@ -35,6 +40,11 @@ instance IsString CurrencyCode where
 
 newtype CurrencyValue a = CurrencyValue (CurrencyCode, a)
                           deriving (Eq,Ord,Show,Data,Generic)
+
+instance FromJSON a => FromJSON (CurrencyValue a)
+instance ToJSON a   => ToJSON (CurrencyValue a)
+
+instance Store a => Store (CurrencyValue a)
 
 instance (Real a, Fractional a) => IsCurrency CurrencyCode (CurrencyValue a) where
   type CurrencyValueType CurrencyCode (CurrencyValue a) = a
