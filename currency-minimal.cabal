@@ -26,6 +26,7 @@ library
                      , aeson
                      , containers
                      , store
+                     , deepseq
                      , text
                      , text-conversions
 
@@ -41,7 +42,7 @@ library
                      , FlexibleContexts
                      , FlexibleInstances
                      , FunctionalDependencies
-                     , GeneralizedNewtypeDeriving
+                     -- , GeneralizedNewtypeDeriving
                      , MultiParamTypeClasses
                      , OverloadedStrings
                      , RecordWildCards

@@ -1,6 +1,7 @@
-{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableInstances, DeriveAnyClass #-}
 module Data.Currency.Minimal where
 
+import Control.DeepSeq
 import Data.Aeson
 import Data.Data
 import Data.Fixed
@@ -27,7 +28,7 @@ convertJust :: Exchange curr exch value  => exch -> curr -> value -> value
 convertJust e t v = fromJust $ convertMaybe e t v
 
 newtype CurrencyCode = CurrencyCode Text
-                       deriving (Eq,Ord,Data,Generic)
+                       deriving (Eq,Ord,Data,Generic,NFData)
 
 instance ToJSON CurrencyCode
 instance FromJSON CurrencyCode
@@ -43,7 +44,7 @@ instance IsString CurrencyCode where
   fromString s = CurrencyCode (Text.toUpper (Text.pack (take 3  s)))
 
 newtype CurrencyValue a = CurrencyValue (CurrencyCode, a)
-                          deriving (Eq,Ord,Show,Data,Generic)
+                          deriving (Eq,Ord,Show,Data,Generic,NFData)
 
 instance FromJSON a => FromJSON (CurrencyValue a)
 instance ToJSON a   => ToJSON (CurrencyValue a)

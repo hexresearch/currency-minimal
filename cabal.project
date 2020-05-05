@@ -1,0 +1,4 @@
+allow-newer: all
+
+packages: currency-minimal.cabal
+
